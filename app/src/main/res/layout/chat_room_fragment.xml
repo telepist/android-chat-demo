@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.chatdemo.room.ChatRoomViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="@dimen/default_elevation"
+            android:paddingStart="@dimen/default_padding"
+            android:paddingTop="@dimen/default_half_padding"
+            android:paddingEnd="@dimen/default_padding"
+            android:paddingBottom="@dimen/default_half_padding"
+            android:text="@{viewModel.chatRoom.name}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/title_text_size"
+            tools:text="War room" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/default_padding"
+            android:paddingBottom="@dimen/default_padding"
+            tools:listitem="@layout/chat_message_item" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="@dimen/default_elevation"
+            android:paddingLeft="@dimen/default_half_padding">
+
+            <EditText
+                android:id="@+id/send_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/new_message_hint"
+                android:text="@{viewModel.sendMessage}" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onSendMessage(sendMessage.getText().toString())}"
+                android:text="@string/send" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Chat Demo</string>
+    <string name="error">Something went wrong!</string>
+    <string name="send">Send</string>
+    <string name="room_title">Room name:</string>
+    <string name="new_room_name">New room name</string>
+
+    <string name="empty_email">Email cannot be empty</string>
+    <string name="empty_password">Password cannot be empty</string>
+    <string name="login_failed">Login failed! %s</string>
+    <string name="create_room">Create room</string>
+    <string name="ask_nickname">Enter your nickname</string>
+    <string name="nick_name_hint">nick name</string>
+    <string name="ok">Ok</string>
+    <string name="email_hint">email</string>
+    <string name="password_hint">password</string>
+    <string name="login_button">Login</string>
+
+    <string name="login_title">Login</string>
+    <string name="lobby_title">Chat rooms</string>
+    <string name="chat_room_title">Chat Room</string>
+    <string name="new_message_hint">Write new message here</string>
+</resources>

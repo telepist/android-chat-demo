@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.chatdemo.lobby.LobbyViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.showChatRooms}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="@dimen/default_elevation"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingTop="@dimen/default_half_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:paddingBottom="@dimen/default_half_padding"
+                android:text="@string/lobby_title"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/title_text_size" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                tools:listitem="@layout/chat_room_item" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="@dimen/default_elevation"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/default_half_padding">
+                <EditText
+                    android:id="@+id/room_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/new_room_name"
+                    android:text="@{viewModel.roomNameInput}" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onCreateRoom(roomName.getText().toString())}"
+                    android:text="@string/create_room" />
+
+            </LinearLayout>
+            />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/double_padding"
+            android:layout_marginEnd="@dimen/double_padding"
+            android:background="@color/white"
+            android:elevation="@dimen/default_elevation"
+            android:orientation="vertical"
+            android:padding="@dimen/default_padding"
+            android:visibility="@{viewModel.showChooseNickName}"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_nickname"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/default_text_size" />
+
+            <EditText
+                android:id="@+id/nick_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nick_name_hint" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onCreateUser(nickName.getText().toString())}"
+                android:text="@string/ok" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="@dimen/top_elevation"
+            android:visibility="@{viewModel.loading}"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+</layout>

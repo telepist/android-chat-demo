@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/login_dest">
+
+    <fragment
+        android:id="@+id/login_dest"
+        android:name="com.example.chatdemo.login.LoginFragment"
+        android:label="@string/login_title"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/action_login_to_lobby"
+            app:destination="@id/lobby_dest"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/login_dest"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lobby_dest"
+        android:name="com.example.chatdemo.lobby.LobbyFragment"
+        android:label="@string/lobby_title"
+        tools:layout="@layout/lobby_fragment">
+        <action
+            android:id="@+id/action_lobby_fragment_to_chat_room_fragment"
+            app:destination="@id/chat_room_dest" />
+        <argument
+            android:name="user_id"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chat_room_dest"
+        android:name="com.example.chatdemo.room.ChatRoomFragment"
+        android:label="@string/chat_room_title">
+        <action
+            android:id="@+id/action_chat_room_fragmet_to_lobby_fragment"
+            app:destination="@id/lobby_dest" />
+        <argument
+            android:name="user"
+            app:argType="com.example.chatdemo.model.User" />
+        <argument
+            android:name="chatRoom"
+            app:argType="com.example.chatdemo.model.ChatRoom" />
+    </fragment>
+</navigation>

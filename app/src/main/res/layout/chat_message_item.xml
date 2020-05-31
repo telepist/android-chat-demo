@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="viewModel"
+            type="com.example.chatdemo.room.ChatRoomViewModel" />
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding">
+
+        <TextView
+            android:id="@+id/sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.getMessageAt(position).sender}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold"
+            tools:text="Hectoe" />
+        <TextView
+            android:id="@+id/time_stamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/sender"
+            android:layout_alignParentEnd="true"
+            android:text="@{viewModel.getMessageAt(position).timeStampFormatted}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/secondary_text_size"
+            tools:text="28.07.2020 12:34" />
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sender"
+            android:text="@{viewModel.getMessageAt(position).message}"
+            android:textSize="@dimen/chat_message_text_size"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua." />
+
+    </RelativeLayout>
+</layout>
