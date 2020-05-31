@@ -10,14 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.chatdemo.adapter.ChatMessagesAdapter
 import com.example.chatdemo.databinding.ChatRoomFragmentBinding
+import com.example.chatdemo.utils.smoothScrollToEnd
 
 class ChatRoomFragment : Fragment() {
     private val args: ChatRoomFragmentArgs by navArgs()
     private val viewModel: ChatRoomViewModel by viewModels {
         ChatRoomViewModelFactory(args.user, args.chatRoom)
     }
+    private lateinit var binding: ChatRoomFragmentBinding
+    private var isScrolledToBottom = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,12 +29,20 @@ class ChatRoomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val messagesAdapter = ChatMessagesAdapter(viewModel)
-        val binding = ChatRoomFragmentBinding.inflate(inflater, container, false)
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding = ChatRoomFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = messagesAdapter
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                isScrolledToBottom =
+                    layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1
+            }
+        })
 
         observeChatMessages(messagesAdapter)
         observeStatus()
@@ -41,6 +53,9 @@ class ChatRoomFragment : Fragment() {
     private fun observeChatMessages(adapter: ChatMessagesAdapter) {
         viewModel.messages.observe(viewLifecycleOwner, Observer {
             adapter.notifyDataSetChanged()
+            if (isScrolledToBottom) {
+                binding.recyclerView.smoothScrollToEnd()
+            }
         })
     }
 
