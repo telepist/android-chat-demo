@@ -20,15 +20,16 @@ Additionally the application uses following libraries for it's advantage:
 - Entering a nick name in first login
 - Creating new chat rooms
 - Sending & receiving messages in the chat rooms
+- The app remembers the user
 
 #### Missing MVP features / To do
 - Registering a new account
-- Remember me
 - Changing the nick name
 - Changing the chat room names
 - More authentication methods
 - Deleting (archiving) chat rooms
 - Deleting chat messages
+- Logging out from the app
 
 #### Other improvements needed
 - At the moment the full list of chat room messages are passed in every update -> Passing only new messages.

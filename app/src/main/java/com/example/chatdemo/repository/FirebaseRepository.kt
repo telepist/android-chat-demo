@@ -25,6 +25,15 @@ class FirebaseRepository : Repository {
     private val auth = Firebase.auth
     private val users = Firebase.firestore.collection(CHAT_USERS_COLLECTION)
     private val rooms = Firebase.firestore.collection(CHAT_ROOMS_COLLECTION)
+
+    override fun getLoggedInUser(): Maybe<FirebaseUser> {
+        return if (auth.currentUser != null) {
+            Maybe.just(auth.currentUser)
+        } else {
+            Maybe.empty()
+        }
+    }
+
     override fun login(
         email: String, password: String
     ): Maybe<FirebaseUser> {

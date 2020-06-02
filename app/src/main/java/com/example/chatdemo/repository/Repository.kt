@@ -10,6 +10,7 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface Repository {
+    fun getLoggedInUser(): Maybe<FirebaseUser>
     fun login(email: String, password: String): Maybe<FirebaseUser>
     fun createChatUser(userId: String, nickName: String): Single<User>
     fun getChatUser(userId: String): Maybe<User>

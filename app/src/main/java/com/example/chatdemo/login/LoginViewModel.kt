@@ -24,6 +24,18 @@ class LoginViewModel : ViewModel(), KoinComponent {
     val error: LiveData<Pair<Int, String>> get() = _error
     val loading = ObservableInt(View.GONE)
 
+    init {
+        repository.getLoggedInUser()
+            .subscribe({ user ->
+                Log.d(TAG, "user ${user.email} already logged in")
+                _userId.value = user.uid
+            }, { throwable ->
+                Log.e(TAG, "error ${throwable.localizedMessage}")
+            }, {
+                Log.d(TAG, "user not logged in")
+            })
+    }
+
     fun onLoginClicked(email: String, password: String) {
         Log.d(TAG, "onLoginClicked() email: $email, password: ${password.mask()}")
 
