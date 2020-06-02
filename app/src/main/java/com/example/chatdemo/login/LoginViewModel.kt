@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chatdemo.R
 import com.example.chatdemo.repository.Repository
+import com.example.chatdemo.utils.mask
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -63,7 +64,4 @@ class LoginViewModel : ViewModel(), KoinComponent {
             })
     }
 }
-
-fun String.mask() =
-    this.replace(".".toRegex(), "*")
 

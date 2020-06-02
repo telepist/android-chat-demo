@@ -21,3 +21,6 @@ fun RecyclerView.isScrolledToBottom(): Boolean {
     }
     return true
 }
+
+fun String.mask() =
+    this.replace(".".toRegex(), "*")
