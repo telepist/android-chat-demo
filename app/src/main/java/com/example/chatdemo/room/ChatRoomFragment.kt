@@ -29,6 +29,7 @@ class ChatRoomFragment : Fragment() {
     ): View? {
         val messagesAdapter = ChatMessagesAdapter(viewModel)
         val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.stackFromEnd = true
         binding = ChatRoomFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

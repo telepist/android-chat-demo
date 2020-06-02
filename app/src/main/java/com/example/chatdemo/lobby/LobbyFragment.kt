@@ -26,12 +26,13 @@ class LobbyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val roomsAdapter = ChatRoomsAdapter(viewModel)
-
+        val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.stackFromEnd = true
         val binding = LobbyFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = roomsAdapter
 
         observeChatRooms(roomsAdapter)
