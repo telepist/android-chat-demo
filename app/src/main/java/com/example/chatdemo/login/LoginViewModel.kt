@@ -9,7 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chatdemo.R
 import com.example.chatdemo.repository.Repository
+import com.example.chatdemo.utils.addTo
 import com.example.chatdemo.utils.mask
+import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -17,6 +19,7 @@ private const val TAG = "LoginViewModel"
 
 class LoginViewModel : ViewModel(), KoinComponent {
     private val repository: Repository by inject()
+    private val compositeDisposable = CompositeDisposable()
 
     private val _userId = MutableLiveData<String>()
     private val _error = MutableLiveData<Pair<@StringRes Int, String>>()
@@ -35,6 +38,7 @@ class LoginViewModel : ViewModel(), KoinComponent {
             }, {
                 Log.d(TAG, "user not logged in")
             })
+            .addTo(compositeDisposable)
     }
 
     fun onLoginClicked(email: String, password: String) {
@@ -62,6 +66,12 @@ class LoginViewModel : ViewModel(), KoinComponent {
                 Log.e(TAG, "login error: $throwable")
                 _error.value = Pair(R.string.login_failed, throwable.localizedMessage)
             })
+            .addTo(compositeDisposable)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }
 

@@ -12,6 +12,8 @@ import com.example.chatdemo.R
 import com.example.chatdemo.model.ChatRoom
 import com.example.chatdemo.model.User
 import com.example.chatdemo.repository.Repository
+import com.example.chatdemo.utils.addTo
+import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.*
@@ -23,6 +25,7 @@ class LobbyViewModel(
 ) : ViewModel(), KoinComponent {
 
     val repository: Repository by inject()
+    private val compositeDisposable = CompositeDisposable()
 
     // TODO https://www.bignerdranch.com/blog/livedatareactivestreams-where-rxjava-meets-livedata/
     private val _user = MutableLiveData<User>()
@@ -62,6 +65,7 @@ class LobbyViewModel(
                 Log.d(TAG, "User $userId doesn't exist. Ask to create one")
                 showChooseNickName.set(View.VISIBLE)
             })
+            .addTo(compositeDisposable)
     }
 
     fun onCreateUser(nickName: String) {
@@ -76,6 +80,7 @@ class LobbyViewModel(
                 Log.e(TAG, "Failed to create user. ${throwable.localizedMessage}")
                 _error.value = R.string.error
             })
+            .addTo(compositeDisposable)
     }
 
     fun onCreateRoom(roomName: String) {
@@ -89,6 +94,7 @@ class LobbyViewModel(
                 Log.e(TAG, "Failed to create chat room. ${throwable.localizedMessage}")
                 _error.value = R.string.error
             })
+            .addTo(compositeDisposable)
     }
 
     private fun observeRooms() {
@@ -102,6 +108,7 @@ class LobbyViewModel(
                 Log.e(TAG, "Failed fetch rooms. ${throwable.localizedMessage}")
                 _error.value = R.string.error
             })
+            .addTo(compositeDisposable)
     }
 
     fun getRoomAt(pos: Int) = rooms.value?.get(pos)
@@ -112,6 +119,11 @@ class LobbyViewModel(
 
     fun onNavigationCompleted() {
         _selectedRoom.value = Optional.empty()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }
 

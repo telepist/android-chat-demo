@@ -11,6 +11,8 @@ import com.example.chatdemo.model.ChatMessage
 import com.example.chatdemo.model.ChatRoom
 import com.example.chatdemo.model.User
 import com.example.chatdemo.repository.Repository
+import com.example.chatdemo.utils.addTo
+import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -22,6 +24,7 @@ class ChatRoomViewModel(
 ) : ViewModel(), KoinComponent {
 
     private val repository: Repository by inject()
+    private val compositeDisposable = CompositeDisposable()
 
     private val _messages = MutableLiveData<List<ChatMessage>>()
     private val _error = MutableLiveData<@StringRes Int>()
@@ -42,6 +45,7 @@ class ChatRoomViewModel(
             }, {
                 Log.d(TAG, "Completed.")
             })
+            .addTo(compositeDisposable)
     }
 
     fun getMessageAt(position: Int) = messages.value?.get(position)
@@ -55,6 +59,12 @@ class ChatRoomViewModel(
                 Log.e(TAG, "Failed send message. ${throwable.localizedMessage}")
                 _error.value = R.string.error
             })
+            .addTo(compositeDisposable)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }
 

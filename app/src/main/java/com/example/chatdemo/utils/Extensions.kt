@@ -3,6 +3,8 @@ package com.example.chatdemo.utils
 import android.os.Handler
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 fun RecyclerView.smoothScrollToEnd() {
     Handler().post() {
@@ -24,3 +26,7 @@ fun RecyclerView.isScrolledToBottom(): Boolean {
 
 fun String.mask() =
     this.replace(".".toRegex(), "*")
+
+fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
+    compositeDisposable.add(this)
+}
